@@ -1,0 +1,670 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600&display=swap');
+
+*{
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    text-decoration: none;
+    transition: .2s linear;
+}
+
+
+$green-color: #469255;              // Verde principal, vivo y natural
+$black: #1a3d2f;                    // Verde oscuro profundo (en vez de negro puro)
+$bg-body: #edf6ee;
+
+$white: #ffffff;                    // Blanco clásico
+$light-color: #0d0d0d;             // Gris más fuerte, ideal para texto secundario
+$light-bg: rgb(212, 222, 212);                // Fondo claro, limpio y sobrio
+
+$border: .2rem solid $black;       // Bordes marcados y elegantes
+$box-shadow: 0 .5rem 1.5rem rgba(0, 0, 0, 0.342); // Sombra estándar
+
+
+
+@mixin grid($val) {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax($val, 1fr));
+    gap: 1.5rem;
+}
+
+@mixin form-btn {
+    width: 100%;
+    text-align: center;
+
+    &:hover {
+        background: $black;
+    }
+}
+
+@mixin white-btn{
+    color: $white;
+    border-color: $black;
+
+    &:hover{
+        color: $light-color;
+        font-weight: 500;
+    }
+    &::before{
+        background: $green-color;
+    }
+}
+
+html {
+    font-size: 62.5%;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    scroll-padding-top: 4rem;
+
+    &::-webkit-scrollbar {
+        width: 1rem;
+    }
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    &::-webkit-scrollbar-thumb{
+        background: $green-color;
+        border-radius: 5rem;
+    }
+}
+
+body{
+    background: $bg-body;
+}
+
+section {
+    padding: 5rem 9%;
+}
+
+
+
+.btn{
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.7rem 2.5rem;
+    border-radius: 5rem;
+    border-top-left-radius: 0;
+    border: $border;
+    cursor: pointer;
+    background: none;
+    color: $light-color;
+    font-size: 1.7rem;
+    overflow: hidden;
+    z-index: 0;
+    position: relative;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background: $green-color;
+        z-index: -1;
+        transition: .3s linear;
+        clip-path: circle(0% at 0% 5%);
+    }
+
+
+    &:hover::before {
+        clip-path: circle(100%);
+    }
+
+    &:hover {
+        color: $white;
+        }
+    }
+    @keyframes desvanecer {
+        0% {
+            transform: translateY(3rem);
+            opacity: 0;
+        }
+}
+
+.header {
+    width: 100%;
+    background: $green-color;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.7rem 9%;
+    box-shadow: $box-shadow;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    transform: translateY(-10rem);
+
+    &.activo {
+        transform: translateY(0rem);
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+        font-size: 3rem;
+        font-weight: 900;
+        color: $white;
+        text-decoration: none;
+
+        img {
+            width: 58px;
+            height: auto;
+        }
+
+        span {
+            margin-left: 0.2rem;
+        }
+    }
+
+    .navbar a {
+        margin: 0 1.2rem;
+        font-size: 1.8rem;
+        color: $white;
+
+        &:hover {
+            color: $black;
+        }
+    }
+
+    .icons {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+
+        div {
+            font-size: 2rem;
+            color: $light-color;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s;
+
+            &:hover {
+                color: $light-color;
+            }
+
+            &.login-dropdown {
+                padding: 0.4rem 1rem;
+
+                &:hover {
+                    background: $green-color;
+                    color: $white;
+                }
+
+                span {
+                    font-size: 1.8rem;
+                }
+
+                i {
+                    font-size: 2rem;
+                }
+            }
+        }
+    }
+
+    .login-link {
+        position: absolute;
+        top: 115%;
+        right: 9rem;
+        width: 20rem;
+        border-radius: 0.5rem;
+        background: $white;
+        box-shadow: $box-shadow;
+        padding: 2rem;
+        display: none;
+        flex-direction: column;
+        gap: 1rem;
+
+        &.activo {
+            display: flex;
+            animation: desvanecer 0.4s linear;
+        }
+
+        a {
+            font-size: 1.6rem;
+            color: $light-color;
+            text-decoration: none;
+
+            &:hover {
+                color: $green-color;
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+#menu-btn {
+    display: none;
+}
+
+
+/* SECCIÓN DE INICIO */
+
+.inicio {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    position: relative;
+    overflow: hidden;
+
+    // Imagen base
+    background: url(../img/fondo-inicio-gato.jpg) no-repeat center;
+    background-size: cover;
+
+    // Pseudo-elemento animado
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%;
+        height: 100%;
+        background: url(../img/fondo-inicio-perro.jpg) no-repeat center;
+        background-size: cover;
+        opacity: 0;
+        animation: fadeBackground 11s infinite ease-in-out;
+        z-index: 0;
+    }
+
+    // Contenido encima del fondo animado
+    .content {
+        position: relative;
+        z-index: 1;
+        width: 50rem;
+        margin-top: -12rem;
+
+        h2 {
+            font-size: 6.5rem;
+            color: $green-color;
+            text-shadow: 5px 5px 7px rgb(0, 0, 0);
+            padding-bottom: 2rem;
+        }
+        p {
+            font-size: 2.5rem;
+            color: $white;
+            padding-bottom: 2rem;
+            text-shadow: 5px 5px 7px rgb(0, 0, 0);
+        }
+        .btn {
+            @include white-btn();
+            margin-right: 3rem;
+        }
+    }
+
+    .olaa {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 25%;
+        z-index: 1;
+    }
+}
+
+// ANIMACIÓN de opacidad
+@keyframes fadeBackground {
+    0%, 40%, 100% {
+        opacity: 0;
+    }
+    50%, 90% {
+        opacity: 1;
+    }
+}
+
+
+/* SECCIÓN DE SOBRE NOSOTROS*/
+
+.sobre-nosotros {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+
+    .imagen{
+        flex: 1 1 40rem;
+
+        img{
+            width: 48rem;
+        }
+    }
+
+    .content{
+        flex:1 1 35rem;
+
+        h3{
+            color: $black;
+            font-size: 4rem;
+
+            span{
+                color: $green-color;
+            }
+        }
+        p {
+            font-size: 1.6rem;
+            color: $light-color;
+            padding: 1rem 0;
+            line-height: 2;
+        }
+    }
+}
+
+// Estilos del Banner:
+
+.comida-perro, .comida-gato {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 2rem 0;
+
+    .imagen{
+        flex: 1 1 40rem;
+
+        img{
+            width: 100%;
+        }
+    }
+
+    .content {
+        flex: 1 1 40rem;
+        text-align: center;
+        padding: 2rem;
+
+        h3{
+            font-size: 3.5rem;
+            color: $black;
+
+            span{
+                color: $green-color;
+            }
+        }
+        p{
+            padding: 1rem 0;
+            line-height: 2;
+            color: #343635;
+            font-size: 1.6rem;
+        }
+        .precios{
+            font-size: 3.5rem;
+            color: #061814;
+            padding: 0.6rem 0;
+        }
+
+        a{
+            img{
+                height: 15rem;
+                margin-top: 1rem;
+            }
+
+            &:hover img{
+                transform: rotate(16deg);
+            }
+        }
+    }
+}
+
+.comida-gato {
+    flex-wrap: wrap-reverse;
+}
+
+/* SECCIÓN DE PRODUCTOS*/
+
+.productos .titulo{
+    text-align: center;
+    font-size: 6.5rem;
+    color: $light-color;
+    padding-bottom: 10rem;
+
+    span{
+        color: $green-color;
+
+    }
+}
+
+.productos .box-container {
+    @include grid(32rem);
+
+    .box {
+        position: relative;
+        overflow: hidden;
+
+        &:hover{
+            .image img{
+                transform: scale(1.1);
+            }
+            .iconos{
+                transform: translateX(0rem);
+            }
+        }
+        .image {
+            height: 35rem;
+            width: 90%;
+            overflow: hidden;
+
+            img{
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+            }
+        }
+
+        .iconos{
+            position: absolute;
+            top: 1rem;
+            right: 2rem;
+            z-index: 10;
+            transform: translateX(10rem);
+
+            a{
+                display: block;
+                width: 4rem;
+                height: 4rem;
+                line-height: 5rem;
+                font-size: 2.2rem;
+                margin-top: 1.5rem;
+                background: $bg-body;
+                color: $green-color;
+                text-align: center;
+                border-radius: .3rem;
+
+                &:hover{
+                    color: $bg-body;
+                    background: $green-color;
+                }
+            }
+        }
+        .content{
+            padding: 1rem 0;
+            text-align: center;
+            
+            h3{
+                font-size: 2.2rem;
+                color: $black;
+                padding-bottom: .5rem;
+            }
+            .precio{
+                font-size: 2rem;
+                color: $green-color;
+            }
+        }
+    } 
+}
+
+/* SECCIÓN DE SERVICIOS */
+
+.servicios {
+
+    .titulo{
+        text-align: center;
+        font-size: 6rem;
+        color: $green-color;
+        padding-bottom: 6rem;
+    }
+
+    .box-container {
+        @include grid(32rem);
+
+
+        .box{
+            background: $light-bg;
+            padding: 3rem;
+            margin: 3rem;
+            text-align: center;
+            border-radius: 33% 67% 70% 30% / 30% 30% 70% 70%;
+
+            &:nth-child(even){
+                border-radius: 79% 21% 81% 19% / 58% 93% 7% 42%;
+            }
+
+            &:hover{
+                border-radius: 2rem;
+            }
+
+            i{
+                height: 6.5rem;
+                width: 6.5rem;
+                line-height: 6.5rem;
+                font-size: 3.5rem;
+                color: $white;
+                background: $green-color;
+                border-radius: 50%;
+                margin-bottom: .5rem;
+            }
+            h3 {
+                font-size: 2rem;
+                color: $black;
+                padding: 1rem 0;
+            }
+        }
+    }
+}
+
+.footer{
+    position: relative;
+    background: url(../img/background-footer-light-blue-1.jpg) no-repeat;
+    background-position: center;
+    background-size: center;
+    padding-top: 10rem;
+    padding-bottom: 2rem;
+
+    img {
+        position: absolute;
+        top: 0; left: 0;
+        height: 10rem;
+        width: 100%;
+    }
+    .redes{
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+
+        a{
+            @include white-btn();
+            
+            i {
+                padding-right: .5rem;
+            }
+        }
+    }
+
+    .creditos{
+        text-align: center;
+        color: $white;
+        font-size: 1.8rem;
+        padding:2rem 1rem;
+        margin-top: 2.5rem;
+
+        span {
+            color: $green-color;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Responsive Media Queries
+@media (max-width: 991px) {
+    html {
+        font-size: 55%;
+    }
+    .header{
+        padding: 2rem;
+    }
+    section {
+        padding: 5rem 2rem;
+    }
+
+    .inicio{
+        justify-content: center;
+        background-position: right;
+
+         .content{
+            text-align: center;
+            padding-bottom: 5rem;
+
+            h3{
+                font-size: 4.4rem;
+            }
+        }
+    }
+}
+
+@media (max-width:768px) {
+    #menu-btn {
+        display: inline-block;
+    }
+    .header{
+        .navbar{
+            position: absolute;
+            top: 99%; left: 0; right: 0;
+            background: $white;
+            clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+            box-shadow: $box-shadow;
+            &.activo{
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            }
+            a{
+                display: block;
+                margin: 2rem;
+                font-size: 2rem;
+                color: $light-color;
+            }
+        }
+    }
+}
+
+@media (max-width:450px) {
+    html {
+        font-size: 50%;
+    }
+    .header .login-form{
+        width: 90%;
+    }
+}
+ 
+// sass --watch public/scss/style.scss public/css/style.css
